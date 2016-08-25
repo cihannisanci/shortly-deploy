@@ -42,7 +42,8 @@ module.exports = function(grunt) {
       target: {
         files: {
           'public/dist/client.min.js': [ 'public/dist/client.js' ],
-          'public/dist/lib.min.js': ['public/dist/client.js']
+          'public/dist/lib.min.js': ['public/dist/client.js'],
+          'public/dist/style.min.css': ['public/style.css']
         }
       }
     },
@@ -100,7 +101,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
+    grunt.task.run([ 'watch', 'exec' ]);
   });
 
   // grunt.registerTask('server-git-deploy', function (target) {
