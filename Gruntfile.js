@@ -42,19 +42,29 @@ module.exports = function(grunt) {
       target: {
         files: {
           'public/dist/client.min.js': [ 'public/dist/client.js' ],
-          'public/dist/lib.min.js': ['public/dist/client.js'],
-          'public/dist/style.min.css': ['public/style.css']
+          'public/dist/lib.min.js': ['public/dist/client.js']
         }
       }
     },
 
     eslint: {
+      // Add list of files to lint here
       target: [
-        // Add list of files to lint here
+        'public/client/**/*.js',
+        'app/**/*.js'
       ]
     },
 
     cssmin: {
+      options: {
+        shorthandCompacting: false,
+        roundingPrecision: -1
+      },
+      target: {
+        files: {
+          'public/dist/style.min.css': ['public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -62,8 +72,11 @@ module.exports = function(grunt) {
         files: [
           'public/client/**/*.js',
           'public/lib/**/*.js',
+          'app/**/*.js',
         ],
         tasks: [
+          'eslint',
+          'mochaTest',
           'concat',
           'uglify'
         ]
@@ -127,9 +140,12 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
-    'concat', 'exec'
+    'eslint',
+    'mochaTest',
+    'concat',
+    'uglify',
+    'exec'
     // add your deploy tasks here
   ]);
-
 
 };
