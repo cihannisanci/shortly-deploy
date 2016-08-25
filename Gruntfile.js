@@ -6,12 +6,17 @@ module.exports = function(grunt) {
       options: {
         separator: ';',
       },
-      dist: {
+      client: {
         src: [ 'public/client/app.js', 
           'public/client/createLinkView.js', 'public/client/link.js', 
           'public/client/links.js', 'public/client/linksView.js', 
           'public/client/linkView.js', 'public/client/router.js' ],
-        dest: 'public/client/client.js'
+        dest: 'public/dist/client.js',
+      },
+      lib: {
+        src: [ 'public/lib/backbone.js', 'public/lib/handlebars.js', 
+          'public/lib/jquery.js', 'public/lib/underscore.js' ],
+        dest: 'public/dist/lib.js',
       }
     },
 
@@ -31,6 +36,15 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        mangle: false
+      },
+      target: {
+        files: {
+          'public/dist/client.min.js': [ 'public/dist/client.js' ],
+          'public/dist/lib.min.js': ['public/dist/client.js']
+        }
+      }
     },
 
     eslint: {
