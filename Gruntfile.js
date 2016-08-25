@@ -134,18 +134,21 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['eslint',
+        'mochaTest',
+        'concat',
+        'uglify',
+        'exec']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    'eslint',
-    'mochaTest',
-    'concat',
-    'uglify',
-    'exec'
+  grunt.registerTask('deploy', function() {
+    grunt.option('prod', true);
+    grunt.task.run('upload');
+  }
     // add your deploy tasks here
-  ]);
+  );
 
 };
