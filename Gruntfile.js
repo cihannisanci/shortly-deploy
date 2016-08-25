@@ -3,11 +3,21 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: [ 'public/client/app.js', 
+          'public/client/createLinkView.js', 'public/client/link.js', 
+          'public/client/links.js', 'public/client/linksView.js', 
+          'public/client/linkView.js', 'public/client/router.js' ],
+        dest: 'public/client/client.js'
+      }
     },
 
     mochaTest: {
       test: {
-        options: {
+        options: { 
           reporter: 'spec'
         },
         src: ['test/**/*.js']
@@ -53,7 +63,17 @@ module.exports = function(grunt) {
       prodServer: {
       }
     },
+
+    exec: {
+      cmd: [
+        ' cd /Users/student/Desktop/shortly-deploy',
+        'git push live master'
+      ].join(' && '),
+    },
+
+
   });
+
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -63,10 +83,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
   });
+
+  // grunt.registerTask('server-git-deploy', function (target) {
+  //   grunt.task.run([ 'git_deploy:target' ]);
+  // });
 
   ////////////////////////////////////////////////////
   // Main grunt tasks
@@ -88,6 +113,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
+    'concat', 'exec'
     // add your deploy tasks here
   ]);
 
