@@ -89,7 +89,6 @@ module.exports = function(grunt) {
 
   });
 
-
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -101,7 +100,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'watch', 'exec' ]);
+    grunt.task.run([ 'watch' ]);
   });
 
   // grunt.registerTask('server-git-deploy', function (target) {
